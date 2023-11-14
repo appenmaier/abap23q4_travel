@@ -1,0 +1,65 @@
+managed implementation in class zbp_abap23q4_travel unique;
+strict ( 2 );
+
+/* Root Entity Travel */
+define behavior for ZR_ABAP23Q4_Travel alias Travel
+persistent table zabap23q4_travel
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _Bookings { create; }
+
+  field ( readonly, numbering : managed ) TravelUUID;
+
+  mapping for zabap23q4_travel corresponding
+    {
+      AgencyId      = agency_id;
+      BeginDate     = begin_date;
+      BookingFee    = booking_fee;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      CurrencyCode  = currency_code;
+      CustomerId    = customer_id;
+      Description   = description;
+      EndDate       = end_date;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+      Status        = status;
+      TotalPrice    = total_price;
+      TravelId      = travel_id;
+      TravelUuid    = travel_uuid;
+    }
+}
+
+/* Child Entity Booking */
+define behavior for ZR_ABAP23Q4_Booking alias Booking
+persistent table zabap23q4_bookng
+lock dependent by _Travel
+authorization dependent by _Travel
+//etag master <field_name>
+{
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) BookingUUID;
+  field ( readonly ) TravelUuid;
+
+  association _Travel;
+
+    mapping for zabap23q4_bookng corresponding
+  {
+    BookingDate = booking_Date;
+    BookingId = booking_id;
+    BookingUuid = booking_uuid;
+    CarrierId = carrier_id;
+    ConnectionId = connection_id;
+    CurrencyCode = currency_code;
+    FlightDate = flight_date;
+    FlightPrice = flight_price;
+    TravelUuid = Travel_uuid;
+  }
+}
