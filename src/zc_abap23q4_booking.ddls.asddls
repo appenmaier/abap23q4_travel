@@ -12,6 +12,7 @@ define view entity ZC_ABAP23Q4_Booking
       ConnectionId,
       FlightDate,
       FlightPrice,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'I_CurrencyStdVH', element: 'Currency' } }]
       CurrencyCode,
 
       /* Associations */

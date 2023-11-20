@@ -1,5 +1,6 @@
 projection;
 strict ( 2 );
+use draft;
 
 define behavior for ZC_ABAP23Q4_Travel //alias <alias_name>
 {
@@ -7,7 +8,13 @@ define behavior for ZC_ABAP23Q4_Travel //alias <alias_name>
   use update;
   use delete;
 
-  use association _Bookings { create; }
+  use association _Bookings { create; with draft; }
+
+  use action Activate;
+  use action Discard;
+  use action Edit;
+  use action Prepare;
+  use action Resume;
 }
 
 define behavior for ZC_ABAP23Q4_Booking //alias <alias_name>
@@ -15,5 +22,5 @@ define behavior for ZC_ABAP23Q4_Booking //alias <alias_name>
   use update;
   use delete;
 
-  use association _Travel;
+  use association _Travel { with draft; }
 }

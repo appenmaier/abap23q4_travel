@@ -53,8 +53,8 @@ annotate entity ZC_ABAP23Q4_Travel with
 
   //  CurrencyCode;
 
-  @UI.lineItem: [{ position: 70 }]
-  @UI.fieldGroup: [{ position: 80, qualifier: 'TravelDetails' }]
+  @UI.lineItem: [{ position: 70, criticality: 'BeginDateCriticality', criticalityRepresentation: #WITHOUT_ICON }]
+  @UI.fieldGroup: [{ position: 80, qualifier: 'TravelDetails', criticality: 'BeginDateCriticality', criticalityRepresentation: #WITHOUT_ICON }]
   Description;
 
   @UI.lineItem: [{ position: 80 }]

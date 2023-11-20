@@ -1,17 +1,26 @@
 managed implementation in class zbp_abap23q4_travel unique;
 strict ( 2 );
+with draft;
 
 /* Root Entity Travel */
 define behavior for ZR_ABAP23Q4_Travel alias Travel
 persistent table zabap23q4_travel
+draft table zabap23q4_trvl_d
 lock master
+total etag LastChangedAt
 authorization master ( instance )
 //etag master <field_name>
 {
   create;
   update;
   delete;
-  association _Bookings { create; }
+  association _Bookings { create; with draft; }
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft determine action Prepare;
+  draft action Resume;
 
   field ( readonly, numbering : managed ) TravelUUID;
 
@@ -38,6 +47,7 @@ authorization master ( instance )
 /* Child Entity Booking */
 define behavior for ZR_ABAP23Q4_Booking alias Booking
 persistent table zabap23q4_bookng
+draft table zabap23q4_bkng_d
 lock dependent by _Travel
 authorization dependent by _Travel
 //etag master <field_name>
@@ -48,7 +58,7 @@ authorization dependent by _Travel
   field ( readonly, numbering : managed ) BookingUUID;
   field ( readonly ) TravelUuid;
 
-  association _Travel;
+  association _Travel { with draft; }
 
     mapping for zabap23q4_bookng corresponding
   {
